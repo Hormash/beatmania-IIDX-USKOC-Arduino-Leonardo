@@ -16,7 +16,7 @@ Reverse http://imgur.com/lrmyJkw
 So to connect the the quadrature encoder into the arduino, is necesary make the following setup.
 http://imgur.com/kNGvjr9
 
-If 
+(Work in progres)
 
 ## Wiring
 
