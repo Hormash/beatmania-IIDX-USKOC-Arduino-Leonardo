@@ -4,18 +4,21 @@ iivxReport_t report;
 #define REPORT_DELAY 2000
 // Number of microseconds between HID reports
 // 2000 = 500hz
-
+#define ENCODER_Z_A 50
+#define ENCODER_Z_B 51
+#define ENCODER_Z_B_REGISTER 12
+#define ENCODER_Z_MILLIS_TOLERANCE 100 // Amount of miliseconds to wait and change state of turntable buttons
 #define ENC_L_A 0
 #define ENC_L_B 1
 #define ENC_L_B_ADDR 3
-#define ENCODER_SENSITIVITY (double) 0.2343
+#define ENCODER_SENSITIVITY (double) 0.4959
 #define ENCODER_PORT PIND
 // encoder sensitivity = number of positions per rotation (400) / number of positions for HID report (256)
 /*
  * connect encoders
  * Scratch to pins 0 and 1
  */
-
+volatile int32_t encX = 0, encY = 0, encZ = 0, encZlast = 0, encZmillis = 0; // Storage for encoder states
 
 
 int tmp;
@@ -84,6 +87,29 @@ void loop() {
   }
   // Read Encoders
   report.xAxis = (uint8_t)((int32_t)(encL / ENCODER_SENSITIVITY) % 256);
+  
+  // Read turntable buttons
+  if( (int32_t)(encL / ENCODER_SENSITIVITY) - encZlast > 5) {
+    if(millis() - encZmillis > ENCODER_Z_MILLIS_TOLERANCE || bitRead(report.buttons,10)) {
+      report.buttons |= (uint16_t)1 << 10;
+      report.buttons &= ~((uint16_t)1 << 11);
+      encZlast = (encL / ENCODER_SENSITIVITY);
+      encZmillis = millis();
+    }
+  } else if ( (int32_t)(encL / ENCODER_SENSITIVITY) - encZlast < -5){
+    if(millis() - encZmillis > ENCODER_Z_MILLIS_TOLERANCE || bitRead(report.buttons,11)) {
+      report.buttons |= (uint16_t)1 << 11;
+      report.buttons &= ~((uint16_t)1 << 10);
+      encZlast = (encL / ENCODER_SENSITIVITY);
+      encZmillis = millis();
+    }
+  } else {
+    if(millis() - encZmillis > ENCODER_Z_MILLIS_TOLERANCE) {
+      report.buttons &= ~((uint16_t)1 << 10);
+      report.buttons &= ~((uint16_t)1 << 11);
+    }
+  }
+  
   // Light LEDs
   if(lightMode==0){
     lights(report.buttons);
