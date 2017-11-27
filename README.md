@@ -12,7 +12,7 @@ You can buy an Arduino Leonardo from [Ebay](http://www.ebay.com/) or [AliExpress
 The encoder or scarth from your USKOC beatmania pad will look like this http://imgur.com/K6XgcYp reverse http://imgur.com/lrmyJkw
 
 So to connect the the quadrature encoder into the arduino, is necesary make the following setup.
-https://imgur.com/aTeogSV
+https://imgur.com/NbJVJxu
 
 (Work in progres)
 
