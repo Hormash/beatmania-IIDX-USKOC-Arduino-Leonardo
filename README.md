@@ -3,12 +3,12 @@
 Conect your pad of beatmania IIDX USKOC to an Arduino Leonardo, the code is from https://github.com/4yn/iivx
 
 
-##Hardware
+## Hardware
 
-####Arduino
+#### Arduino
 You can buy an Arduino Leonardo from [Ebay](http://www.ebay.com/) or [AliExpress](http://www.aliexpress.com), unless you want an original version [Arduino.cc](https://www.arduino.cc/en/Guide/ArduinoLeonardoMicro)
 
-####Quadrature Encoder
+#### Quadrature Encoder
 The encoder or scarth from your USKOC beatmania pad will look like this http://imgur.com/K6XgcYp reverse http://imgur.com/lrmyJkw
 
 So to connect the the quadrature encoder into the arduino, is necesary make the following setup.
